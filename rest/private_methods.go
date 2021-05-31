@@ -251,25 +251,27 @@ func (api *Kraken) GetTradeVolume(needFeeInfo bool, pairs ...string) (TradeVolum
 }
 
 // AddOrder - method sends order to exchange
-func (api *Kraken) AddOrder(pair string, side string, orderType string, volume float64, args map[string]interface{}) (AddOrderResponse, error) {
+func (api *Kraken) AddOrder(pair string, side string, orderType string, volume float64, args *map[string]interface{}) (AddOrderResponse, error) {
 	data := url.Values{
 		"pair":      {pair},
 		"volume":    {strconv.FormatFloat(volume, 'f', 8, 64)},
 		"type":      {side},
 		"ordertype": {orderType},
 	}
-	for key, value := range args {
-		switch v := value.(type) {
-		case string:
-			data.Set(key, v)
-		case int64:
-			data.Set(key, strconv.FormatInt(v, 10))
-		case float64:
-			data.Set(key, strconv.FormatFloat(v, 'f', 8, 64))
-		case bool:
-			data.Set(key, strconv.FormatBool(v))
-		default:
-			log.Printf("[WARNING] Unknown value type %v for key %s", value, key)
+	if args {
+		for key, value := range *args {
+			switch v := value.(type) {
+			case string:
+				data.Set(key, v)
+			case int64:
+				data.Set(key, strconv.FormatInt(v, 10))
+			case float64:
+				data.Set(key, strconv.FormatFloat(v, 'f', 8, 64))
+			case bool:
+				data.Set(key, strconv.FormatBool(v))
+			default:
+				log.Printf("[WARNING] Unknown value type %v for key %s", value, key)
+			}
 		}
 	}
 
