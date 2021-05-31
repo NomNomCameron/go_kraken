@@ -258,7 +258,7 @@ func (api *Kraken) AddOrder(pair string, side string, orderType string, volume f
 		"type":      {side},
 		"ordertype": {orderType},
 	}
-	if args {
+	if args != nil {
 		for key, value := range *args {
 			switch v := value.(type) {
 			case string:
