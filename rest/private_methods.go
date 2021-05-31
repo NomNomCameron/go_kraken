@@ -180,10 +180,9 @@ func (api *Kraken) GetOpenPositions(docalcs bool, txIDs ...string) (map[string]P
 	if docalcs {
 		data.Set("docalcs", "true")
 	}
-	if len(txIDs) == 0 {
-		return nil, fmt.Errorf("txIDs is required")
+	if len(txIDs) > 0 {
+		data.Set("txid", strings.Join(txIDs, ","))
 	}
-	data.Set("txid", strings.Join(txIDs, ","))
 
 	response := make(map[string]Position)
 	if err := api.request("OpenPositions", true, data, &response); err != nil {
