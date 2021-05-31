@@ -710,7 +710,7 @@ type Position struct {
 	Margin       float64 `json:"margin,string"`
 	Misc         string  `json:"misc"`
 	Value        float64 `json:"value,omitempty,string"`
-	Profit       string `json:"net,omitempty,string"`
+	Profit       string `json:"net"`
 	Terms        string  `json:"terms,omitempty"`
 	RolloverTime float64 `json:"rollovertm,omitempty,string"`
 	Flags        string  `json:"oflags"`
